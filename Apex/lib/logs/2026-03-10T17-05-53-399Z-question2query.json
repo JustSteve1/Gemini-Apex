@@ -1,0 +1,40 @@
+{
+  "skill_execution": {
+    "question": "Who set the fastest lap in qualifying?",
+    "metadata": {
+      "timestamp": "2024-07-30T12:00:00Z",
+      "entities_extracted": [
+        "Fastest Lap",
+        "Qualifying Session",
+        "Driver"
+      ],
+      "conceptual_graph": [
+        {
+          "source_node": {
+            "label": "Driver"
+          },
+          "relationship": "SET",
+          "target_node": {
+            "label": "Lap",
+            "property": {
+              "type": "Fastest"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Lap"
+          },
+          "relationship": "IN",
+          "target_node": {
+            "label": "Session",
+            "property": {
+              "type": "Qualifying"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sql": "WITH LatestQualifying AS (\n    SELECT\n        season,\n        event_name,\n        session_key,\n        MAX(date) AS latest_session_date\n    FROM\n        f1_data_library_DS.telemetry\n    WHERE\n        session_type = 'Q'\n    GROUP BY\n        season, event_name, session_key\n    ORDER BY\n        latest_session_date DESC\n    LIMIT 1\n)\nSELECT\n    dn.full_name,\n    dn.driver_code,\n    t.event_name,\n    t.season,\n    FORMAT(\"%02d:%02d.%03d\",\n        CAST(FLOOR(t.lap_time_sec / 60) AS INT64),\n        CAST(FLOOR(MOD(CAST(t.lap_time_sec AS NUMERIC), 60)) AS INT64),\n        CAST(MOD(CAST(t.lap_time_sec * 1000 AS INT64), 1000) AS INT64)\n    ) AS formatted_lap_time\nFROM\n    f1_data_library_DS.telemetry AS t\nJOIN\n    f1_data_library_DS.public_driver_number_mapping AS dn\n    ON t.driver_number = CAST(dn.driver_number AS STRING) AND t.season = dn.season\nJOIN\n    LatestQualifying AS lq\n    ON t.session_key = lq.session_key\nWHERE\n    t.session_type = 'Q'\nORDER BY\n    t.lap_time_sec ASC\nLIMIT 1"
+}

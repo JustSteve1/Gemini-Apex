@@ -1,0 +1,53 @@
+{
+  "skill_execution": {
+    "question": "Who set the fastest lap in qualifying?",
+    "metadata": {
+      "timestamp": "2024-07-30T12:00:00Z",
+      "entities_extracted": [
+        "Fastest Lap",
+        "Qualifying Session",
+        "Driver",
+        "2026 Season"
+      ],
+      "conceptual_graph": [
+        {
+          "source_node": {
+            "label": "Driver"
+          },
+          "relationship": "SET",
+          "target_node": {
+            "label": "Lap"
+          }
+        },
+        {
+          "source_node": {
+            "label": "Lap"
+          },
+          "relationship": "IS_FASTEST_IN",
+          "target_node": {
+            "label": "Session",
+            "property": {
+              "type": "Qualifying"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Session",
+            "property": {
+              "type": "Qualifying"
+            }
+          },
+          "relationship": "IN_SEASON",
+          "target_node": {
+            "label": "Season",
+            "property": {
+              "year": "2026"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sql": "SELECT\n    dn.full_name AS driver_full_name,\n    dn.driver_code,\n    FORMAT(\"%02d:%02d.%03d\",\n        DIV(l.lap_time_ms, 60000),\n        DIV(MOD(l.lap_time_ms, 60000), 1000),\n        MOD(l.lap_time_ms, 1000)\n    ) AS fastest_lap_time,\n    r.race_name AS event_name,\n    s.session_type\n  FROM\n    f1_data_library_DS.public_laps AS l\n  JOIN\n    f1_data_library_DS.public_sessions AS s\n    ON l.session_id = s.session_id\n  JOIN\n    f1_data_library_DS.public_races AS r\n    ON s.race_id = r.race_id\n  JOIN\n    f1_data_library_DS.public_seasons AS sea\n    ON r.season_id = sea.season_id\n  JOIN\n    f1_data_library_DS.public_drivers AS pd\n    ON l.driver_id = pd.driver_id\n  JOIN\n    f1_data_library_DS.public_driver_number_mapping AS dn\n    ON pd.driver_code = dn.driver_code AND dn.season = sea.year\n  WHERE\n    s.session_type = 'Qualifying'\n    AND sea.year = 2026\n  ORDER BY\n    l.lap_time_ms ASC\n  LIMIT 1"
+}

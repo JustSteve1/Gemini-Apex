@@ -1,0 +1,54 @@
+{
+  "question": "What tyres did Verstappen use?",
+  "metadata": {
+    "timestamp": "2024-07-30T12:00:00Z",
+    "entities_extracted": [
+      "Max Verstappen",
+      "Tyres",
+      "2026",
+      "Race"
+    ],
+    "conceptual_graph": [
+      {
+        "source_node": {
+          "label": "Driver",
+          "property": {
+            "name": "Max Verstappen",
+            "code": "VER"
+          }
+        },
+        "relationship": "USED",
+        "target_node": {
+          "label": "Tyre",
+          "property": {
+            "type": "Compound"
+          }
+        }
+      },
+      {
+        "source_node": {
+          "label": "Tyre"
+        },
+        "relationship": "IN_SESSION",
+        "target_node": {
+          "label": "Session",
+          "property": {
+            "type": "Race"
+          }
+        }
+      },
+      {
+        "source_node": {
+          "label": "Session"
+        },
+        "relationship": "IN_SEASON",
+        "target_node": {
+          "label": "Season",
+          "property": {
+            "year": 2026
+          }
+        }
+      }
+    ]
+  }
+}

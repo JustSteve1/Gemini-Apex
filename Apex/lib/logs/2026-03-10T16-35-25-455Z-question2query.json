@@ -1,0 +1,53 @@
+{
+  "skill_execution": {
+    "question": "Who set the fastest lap in qualifying?",
+    "metadata": {
+      "timestamp": "2026-03-10T12:00:00Z",
+      "entities_extracted": [
+        "Fastest Lap",
+        "Qualifying Session",
+        "Driver",
+        "2026 Season"
+      ],
+      "conceptual_graph": [
+        {
+          "source_node": {
+            "label": "Driver"
+          },
+          "relationship": "SET",
+          "target_node": {
+            "label": "Lap",
+            "property": {
+              "type": "Fastest"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Lap"
+          },
+          "relationship": "IN",
+          "target_node": {
+            "label": "Session",
+            "property": {
+              "type": "Qualifying"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Session"
+          },
+          "relationship": "OCCURRED_IN",
+          "target_node": {
+            "label": "Season",
+            "property": {
+              "year": 2026
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sql": "WITH LatestQualifyingSession AS (\n    SELECT\n        session_key,\n        event_name\n    FROM\n        f1_data_library_DS.sessions\n    WHERE\n        session_type = 'Qualifying'\n        AND season = 2026\n    ORDER BY\n        date_start DESC\n    LIMIT 1\n)\nSELECT\n    dn.full_name,\n    dn.driver_code,\n    lqs.event_name,\n    FORMAT_TIMESTAMP('%M:%S.###', TIMESTAMP_SECONDS(l.lap_duration)) AS fastest_lap_time\nFROM\n    f1_data_library_DS.laps AS l\nJOIN\n    LatestQualifyingSession AS lqs\nON\n    l.session_key = lqs.session_key\nJOIN\n    f1_data_library_DS.public_driver_number_mapping AS dn\nON\n    l.driver_number = dn.driver_number\n    AND l.season = dn.season\nWHERE\n    l.lap_duration = (\n        SELECT MIN(lap_duration)\n        FROM f1_data_library_DS.laps\n        WHERE session_key = lqs.session_key\n    )\nLIMIT 1;"
+}

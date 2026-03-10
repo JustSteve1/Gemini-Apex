@@ -1,0 +1,81 @@
+{
+  "skill_execution": {
+    "question": "Compare HAM vs LEC through Turn 3",
+    "metadata": {
+      "timestamp": "2026-03-10T12:00:00Z",
+      "entities_extracted": [
+        "Lewis Hamilton",
+        "Charles Leclerc",
+        "Turn 3",
+        "Telemetry Data",
+        "Australian Grand Prix",
+        "2026"
+      ],
+      "conceptual_graph": [
+        {
+          "source_node": {
+            "label": "Driver",
+            "property": {
+              "name": "Lewis Hamilton",
+              "code": "HAM"
+            }
+          },
+          "relationship": "COMPARED_TO",
+          "target_node": {
+            "label": "Driver",
+            "property": {
+              "name": "Charles Leclerc",
+              "code": "LEC"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Driver"
+          },
+          "relationship": "DRIVES_THROUGH",
+          "target_node": {
+            "label": "Corner",
+            "property": {
+              "number": 3
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Corner"
+          },
+          "relationship": "HAS_TELEMETRY_DATA",
+          "target_node": {
+            "label": "Telemetry Data"
+          }
+        },
+        {
+          "source_node": {
+            "label": "Telemetry Data"
+          },
+          "relationship": "RECORDED_AT",
+          "target_node": {
+            "label": "Grand Prix",
+            "property": {
+              "name": "Australian Grand Prix"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Grand Prix"
+          },
+          "relationship": "IN_SEASON",
+          "target_node": {
+            "label": "Season",
+            "property": {
+              "year": 2026
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sql": "WITH DriverFastestLaps AS (\n    SELECT\n        driver_number,\n        lap_number,\n        MIN(lap_time_sec) AS fastest_lap_time\n    FROM\n        f1_data_library_DS.corner_telemetry_sequences\n    WHERE\n        season = 2026\n        AND event_name = 'Australian Grand Prix'\n        AND session_type = 'Q'\n        AND driver_number IN ('HAM', 'LEC')\n    GROUP BY\n        driver_number, lap_number\n),\nRankedFastestLaps AS (\n    SELECT\n        driver_number,\n        lap_number,\n        fastest_lap_time,\n        ROW_NUMBER() OVER (PARTITION BY driver_number ORDER BY fastest_lap_time ASC) as rn\n    FROM\n        DriverFastestLaps\n)\nSELECT\n    t.driver_number,\n    t.lap_number,\n    t.measurement_label,\n    ROUND(t.speed, 1) AS speed_kmh,\n    ROUND(t.throttle, 1) AS throttle_percent,\n    ROUND(t.brake, 1) AS brake_percent,\n    t.gear\nFROM\n    f1_data_library_DS.corner_telemetry_sequences AS t\nJOIN\n    RankedFastestLaps AS rfl\nON\n    t.driver_number = rfl.driver_number\n    AND t.lap_number = rfl.lap_number\nWHERE\n    t.season = 2026\n    AND t.event_name = 'Australian Grand Prix'\n    AND t.session_type = 'Q'\n    AND t.corner_number = 3\n    AND rfl.rn = 1\nORDER BY\n    t.driver_number,\n    t.lap_number,\n    t.measurement_index\nLIMIT 50;"
+}

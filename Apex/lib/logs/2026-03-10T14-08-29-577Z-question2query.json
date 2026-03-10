@@ -1,0 +1,39 @@
+{
+  "question": "Who set the fastest lap in qualifying?",
+  "metadata": {
+    "nodes": [
+      {
+        "id": "n1",
+        "label": "qualifying",
+        "type": "event"
+      },
+      {
+        "id": "n2",
+        "label": "fastest lap",
+        "type": "metric"
+      },
+      {
+        "id": "n3",
+        "label": "driver",
+        "type": "entity"
+      }
+    ],
+    "relationships": [
+      {
+        "id": "r1",
+        "source": "n1",
+        "target": "n2",
+        "type": "has_metric"
+      },
+      {
+        "id": "r2",
+        "source": "n2",
+        "target": "n3",
+        "type": "set_by"
+      }
+    ],
+    "question_type": "who",
+    "target_entity": "driver",
+    "filters": []
+  }
+}

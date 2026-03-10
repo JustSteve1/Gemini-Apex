@@ -1,0 +1,64 @@
+{
+  "skill_execution": {
+    "question": "Who set the fastest lap in qualifying?",
+    "metadata": {
+      "timestamp": "2026-03-10T12:00:00Z",
+      "entities_extracted": [
+        "Fastest Lap",
+        "Qualifying Session",
+        "Driver"
+      ],
+      "conceptual_graph": [
+        {
+          "source_node": {
+            "label": "Driver"
+          },
+          "relationship": "SET",
+          "target_node": {
+            "label": "Lap",
+            "property": {
+              "type": "Fastest"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Lap"
+          },
+          "relationship": "IN_SESSION",
+          "target_node": {
+            "label": "Session",
+            "property": {
+              "type": "Qualifying"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Session"
+          },
+          "relationship": "PART_OF",
+          "target_node": {
+            "label": "Event",
+            "property": {
+              "context": "latest"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Event"
+          },
+          "relationship": "IN_SEASON",
+          "target_node": {
+            "label": "Season",
+            "property": {
+              "context": "latest"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sql": "WITH LatestSession AS (\n    SELECT session_key, season, event_name\n    FROM f1_data_library_DS.telemetry\n    WHERE session_type = 'Q'\n    ORDER BY date DESC\n    LIMIT 1\n)\nSELECT\n    dn.full_name,\n    dn.driver_code,\n    FORMAT(\"%02d:%02d.%03d\",\n        CAST(FLOOR(t.lap_time_sec / 60) AS INT64),\n        CAST(FLOOR(MOD(CAST(t.lap_time_sec AS NUMERIC), 60)) AS INT64),\n        CAST(MOD(CAST(t.lap_time_sec * 1000 AS INT64), 1000) AS INT64)\n    ) AS formatted_lap_time,\n    t.event_name,\n    t.season\nFROM\n    f1_data_library_DS.telemetry AS t\nJOIN\n    LatestSession AS ls\nON\n    t.session_key = ls.session_key\n    AND t.season = ls.season\n    AND t.event_name = ls.event_name\nJOIN\n    f1_data_library_DS.public_driver_number_mapping AS dn\nON\n    t.driver_number = CAST(dn.driver_number AS STRING) AND t.season = dn.season\nWHERE\n    t.session_type = 'Q'\nORDER BY\n    t.lap_time_sec ASC\nLIMIT 1"
+}

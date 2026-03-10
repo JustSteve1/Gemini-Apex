@@ -1,0 +1,53 @@
+{
+  "skill_execution": {
+    "question": "Who set the fastest lap in qualifying?",
+    "metadata": {
+      "timestamp": "2024-07-30T12:00:00Z",
+      "entities_extracted": [
+        "Fastest Lap",
+        "Qualifying",
+        "Driver",
+        "2024"
+      ],
+      "conceptual_graph": [
+        {
+          "source_node": {
+            "label": "Driver"
+          },
+          "relationship": "SET",
+          "target_node": {
+            "label": "Lap",
+            "property": {
+              "type": "Fastest"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Lap"
+          },
+          "relationship": "IN",
+          "target_node": {
+            "label": "Session",
+            "property": {
+              "type": "Qualifying"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Session"
+          },
+          "relationship": "IN",
+          "target_node": {
+            "label": "Year",
+            "property": {
+              "value": 2024
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sql": "SELECT\n    pdnm.full_name,\n    pdnm.driver_code,\n    FORMAT(\"%02d:%02d.%03d\",\n        CAST(FLOOR(pl.lap_time_ms / 60000) AS INT64),\n        CAST(FLOOR(MOD(pl.lap_time_ms, 60000) / 1000) AS INT64),\n        CAST(MOD(pl.lap_time_ms, 1000) AS INT64)\n    ) AS fastest_lap_time,\n    pr.race_name,\n    pse.year\nFROM\n    f1_data_library_DS.public_laps AS pl\nJOIN\n    f1_data_library_DS.public_sessions AS ps\n    ON pl.session_id = ps.session_id\nJOIN\n    f1_data_library_DS.public_races AS pr\n    ON ps.race_id = pr.race_id\nJOIN\n    f1_data_library_DS.public_seasons AS pse\n    ON pr.season_id = pse.season_id\nJOIN\n    f1_data_library_DS.public_drivers AS pd\n    ON pl.driver_id = pd.driver_id\nJOIN\n    f1_data_library_DS.public_driver_number_mapping AS pdnm\n    ON CAST(pd.driver_code AS STRING) = pdnm.driver_code AND pse.year = pdnm.season\nWHERE\n    pse.year = 2024\n    AND ps.session_type = 'Q'\nORDER BY\n    pl.lap_time_ms ASC\nLIMIT 1"
+}

@@ -1,0 +1,59 @@
+{
+  "skill_execution": {
+    "question": "What tyres did Verstappen use?",
+    "metadata": {
+      "timestamp": "2026-03-10T12:00:00Z",
+      "entities_extracted": [
+        "Max Verstappen",
+        "Tyre Compound",
+        "2026 Season"
+      ],
+      "conceptual_graph": [
+        {
+          "source_node": {
+            "label": "Driver",
+            "property": {
+              "name": "Max Verstappen",
+              "code": "VER"
+            }
+          },
+          "relationship": "USED",
+          "target_node": {
+            "label": "TyreCompound"
+          }
+        },
+        {
+          "source_node": {
+            "label": "TyreCompound"
+          },
+          "relationship": "ON",
+          "target_node": {
+            "label": "Lap"
+          }
+        },
+        {
+          "source_node": {
+            "label": "Lap"
+          },
+          "relationship": "IN",
+          "target_node": {
+            "label": "Session"
+          }
+        },
+        {
+          "source_node": {
+            "label": "Session"
+          },
+          "relationship": "IN",
+          "target_node": {
+            "label": "Season",
+            "property": {
+              "year": 2026
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sql": "SELECT DISTINCT\n    t1.compound,\n    t1.session_type,\n    t1.race_name\nFROM\n    f1_data_library_DS.laps_clean AS t1\nJOIN\n    f1_data_library_DS.public_drivers AS t2\nON\n    t1.driver_id = t2.driver_id\nWHERE\n    t2.driver_code = 'VER'\n    AND t1.season = 2026\nORDER BY\n    t1.session_type, t1.race_name, t1.compound\nLIMIT 50"
+}

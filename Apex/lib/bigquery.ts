@@ -43,7 +43,7 @@ export async function executeQuery(sql: string): Promise<QueryResult> {
     const [rows] = await bq.query({
       query: sql,
       location: process.env.BQ_LOCATION || "US",
-      maximumBytesBilled: "100000000", // 100MB safety cap
+      maximumBytesBilled: "1000000000", // 1GB safety cap for telemetry
     });
 
     return { rows: rows as Record<string, unknown>[], totalRows: rows.length };

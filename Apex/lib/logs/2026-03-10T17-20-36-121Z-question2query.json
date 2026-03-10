@@ -1,0 +1,66 @@
+{
+  "skill_execution": {
+    "question": "Who set the fastest lap in qualifying?",
+    "metadata": {
+      "timestamp": "2026-03-10T12:00:00Z",
+      "entities_extracted": [
+        "Fastest Lap",
+        "Qualifying Session",
+        "Driver",
+        "Australian Grand Prix",
+        "2026 Season"
+      ],
+      "conceptual_graph": [
+        {
+          "source_node": {
+            "label": "Driver"
+          },
+          "relationship": "SET",
+          "target_node": {
+            "label": "Lap",
+            "property": {
+              "type": "Fastest"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Lap"
+          },
+          "relationship": "IN",
+          "target_node": {
+            "label": "Session",
+            "property": {
+              "type": "Qualifying"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Session"
+          },
+          "relationship": "IN",
+          "target_node": {
+            "label": "Grand Prix",
+            "property": {
+              "name": "Australian Grand Prix"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Grand Prix"
+          },
+          "relationship": "IN",
+          "target_node": {
+            "label": "Season",
+            "property": {
+              "year": 2026
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sql": "WITH LapDurations AS (\n    SELECT\n        t.driver_number,\n        t.lap_number,\n        MAX(t.lap_time_sec) AS lap_time_sec\n    FROM\n        f1_data_library_DS.telemetry AS t\n    WHERE\n        t.season = 2026\n        AND t.event_name = 'Australian Grand Prix'\n        AND t.session_type = 'Q'\n    GROUP BY\n        t.driver_number, t.lap_number\n)\nSELECT\n    dm.full_name,\n    FORMAT(\"%02d:%02d.%03d\",\n        CAST(FLOOR(ld.lap_time_sec / 60) AS INT64),\n        CAST(FLOOR(MOD(CAST(ld.lap_time_sec AS NUMERIC), 60)) AS INT64),\n        CAST(MOD(CAST(ld.lap_time_sec * 1000 AS INT64), 1000) AS INT64)\n    ) AS formatted_lap_time\nFROM\n    LapDurations AS ld\nJOIN\n    f1_data_library_DS.driver_mapping_2026 AS dm\n    ON TRIM(CAST(ld.driver_number AS STRING)) = TRIM(CAST(dm.driver_number AS STRING))\nORDER BY\n    ld.lap_time_sec ASC\nLIMIT 1"
+}
