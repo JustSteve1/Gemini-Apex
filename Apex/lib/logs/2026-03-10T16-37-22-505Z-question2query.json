@@ -1,0 +1,53 @@
+{
+  "skill_execution": {
+    "question": "Who set the fastest lap in qualifying?",
+    "metadata": {
+      "timestamp": "2024-07-30T12:00:00Z",
+      "entities_extracted": [
+        "Fastest Lap",
+        "Qualifying Session",
+        "Driver",
+        "2026 Season"
+      ],
+      "conceptual_graph": [
+        {
+          "source_node": {
+            "label": "Driver"
+          },
+          "relationship": "SET",
+          "target_node": {
+            "label": "Lap",
+            "property": {
+              "type": "Fastest"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Lap"
+          },
+          "relationship": "IN",
+          "target_node": {
+            "label": "Session",
+            "property": {
+              "type": "Qualifying"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Session"
+          },
+          "relationship": "IN_SEASON",
+          "target_node": {
+            "label": "Season",
+            "property": {
+              "year": 2026
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sql": "SELECT\n    dn.full_name,\n    FORMAT(\"%02d:%02d.%03d\", DIV(l.lap_time_ms, 60000), DIV(MOD(l.lap_time_ms, 60000), 1000), MOD(l.lap_time_ms, 1000)) AS fastest_lap_time\nFROM\n    f1_data_library_DS.public_laps AS l\nJOIN\n    f1_data_library_DS.public_sessions AS s\n    ON l.session_id = s.session_id\nJOIN\n    f1_data_library_DS.public_races AS r\n    ON s.race_id = r.race_id\nJOIN\n    f1_data_library_DS.public_seasons AS sea\n    ON r.season_id = sea.season_id\nJOIN\n    f1_data_library_DS.public_driver_number_mapping AS dn\n    ON CAST(l.driver_id AS STRING) = dn.driver_number AND sea.year = dn.season\nWHERE\n    s.session_type = 'Qualifying'\n    AND sea.year = 2026\nORDER BY\n    l.lap_time_ms ASC\nLIMIT 1"
+}

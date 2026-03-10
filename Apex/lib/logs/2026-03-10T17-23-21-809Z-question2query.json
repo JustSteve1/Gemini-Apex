@@ -1,0 +1,84 @@
+{
+  "skill_execution": {
+    "question": "Compare HAM vs LEC fastest times in turn 3 in australia",
+    "metadata": {
+      "timestamp": "2026-03-10T12:00:00Z",
+      "entities_extracted": [
+        "Lewis Hamilton",
+        "Charles Leclerc",
+        "Fastest Time",
+        "Turn 3",
+        "Australian Grand Prix",
+        "2026"
+      ],
+      "conceptual_graph": [
+        {
+          "source_node": {
+            "label": "Driver",
+            "property": {
+              "name": "Lewis Hamilton",
+              "code": "HAM"
+            }
+          },
+          "relationship": "COMPARED_TO",
+          "target_node": {
+            "label": "Driver",
+            "property": {
+              "name": "Charles Leclerc",
+              "code": "LEC"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Driver"
+          },
+          "relationship": "ACHIEVED",
+          "target_node": {
+            "label": "Time",
+            "property": {
+              "type": "Fastest"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Time"
+          },
+          "relationship": "IN",
+          "target_node": {
+            "label": "Corner",
+            "property": {
+              "number": 3
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Corner"
+          },
+          "relationship": "LOCATED_AT",
+          "target_node": {
+            "label": "Grand Prix",
+            "property": {
+              "name": "Australian Grand Prix"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Grand Prix"
+          },
+          "relationship": "IN_SEASON",
+          "target_node": {
+            "label": "Season",
+            "property": {
+              "year": 2026
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sql": "WITH DriverCodes AS (\n    SELECT\n        driver_number,\n        name_acronym\n    FROM\n        f1_data_library_DS.driver_mapping_2026\n    WHERE\n        name_acronym IN ('HAM', 'LEC')\n),\nFastestCornerTimes AS (\n    SELECT\n        cf.driver_number,\n        MIN(cf.corner_duration_sec) AS fastest_corner_time_sec\n    FROM\n        f1_data_library_DS.corner_features AS cf\n    WHERE\n        cf.season = 2026\n        AND cf.event_name = 'Australian Grand Prix'\n        AND cf.corner_number = 3\n        AND cf.driver_number IN (SELECT driver_number FROM DriverCodes)\n    GROUP BY\n        cf.driver_number\n)\nSELECT\n    dc.name_acronym AS driver_code,\n    FORMAT(\"%02d:%02d.%03d\",\n        CAST(FLOOR(fct.fastest_corner_time_sec / 60) AS INT64),\n        CAST(FLOOR(MOD(CAST(fct.fastest_corner_time_sec AS NUMERIC), 60)) AS INT64),\n        CAST(MOD(CAST(fct.fastest_corner_time_sec * 1000 AS INT64), 1000) AS INT64)\n    ) AS formatted_corner_time\nFROM\n    FastestCornerTimes AS fct\nJOIN\n    DriverCodes AS dc\nON\n    fct.driver_number = dc.driver_number\nORDER BY\n    fct.fastest_corner_time_sec ASC\nLIMIT 50"
+}

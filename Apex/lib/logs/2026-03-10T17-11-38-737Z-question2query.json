@@ -1,0 +1,52 @@
+{
+  "skill_execution": {
+    "question": "Who set the fastest lap in qualifying for Saudi Arabia?",
+    "metadata": {
+      "timestamp": "2024-07-30T12:00:00Z",
+      "entities_extracted": [
+        "Fastest Lap",
+        "Qualifying",
+        "Saudi Arabian Grand Prix"
+      ],
+      "conceptual_graph": [
+        {
+          "source_node": {
+            "label": "Driver"
+          },
+          "relationship": "SET",
+          "target_node": {
+            "label": "Lap",
+            "property": {
+              "type": "Fastest Lap"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Lap"
+          },
+          "relationship": "RECORDED_IN",
+          "target_node": {
+            "label": "Session",
+            "property": {
+              "type": "Qualifying"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Session"
+          },
+          "relationship": "PART_OF",
+          "target_node": {
+            "label": "Grand Prix",
+            "property": {
+              "name": "Saudi Arabian Grand Prix"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sql": "WITH LatestQualifyingSession AS (\n    SELECT\n        session_key,\n        event_name,\n        season,\n        session_type\n    FROM\n        f1_data_library_DS.telemetry\n    WHERE\n        event_name = 'Saudi Arabian Grand Prix'\n        AND session_type = 'Q'\n        AND season = 2024\n    ORDER BY\n        date DESC\n    LIMIT 1\n)\nSELECT\n    dn.full_name,\n    dn.driver_code,\n    FORMAT(\"%02d:%02d.%03d\",\n        CAST(FLOOR(t.lap_time_sec / 60) AS INT64),\n        CAST(FLOOR(MOD(CAST(t.lap_time_sec AS NUMERIC), 60)) AS INT64),\n        CAST(MOD(CAST(t.lap_time_sec * 1000 AS INT64), 1000) AS INT64)\n    ) AS formatted_lap_time\nFROM\n    f1_data_library_DS.telemetry AS t\nJOIN\n    f1_data_library_DS.public_driver_number_mapping AS dn\n    ON t.driver_number = CAST(dn.driver_number AS STRING) AND t.season = dn.season\nJOIN\n    LatestQualifyingSession AS lqs\n    ON t.session_key = lqs.session_key\nWHERE\n    t.event_name = lqs.event_name\n    AND t.session_type = lqs.session_type\n    AND t.season = lqs.season\nORDER BY\n    t.lap_time_sec ASC\nLIMIT 1"
+}

@@ -1,0 +1,56 @@
+{
+  "skill_execution": {
+    "question": "Who set the fastest lap in qualifying?",
+    "metadata": {
+      "timestamp": "2024-07-30T12:00:00Z",
+      "entities_extracted": [
+        "Fastest Lap",
+        "Qualifying Session",
+        "Driver",
+        "2024 Season"
+      ],
+      "conceptual_graph": [
+        {
+          "source_node": {
+            "label": "Driver"
+          },
+          "relationship": "SET",
+          "target_node": {
+            "label": "Lap",
+            "property": {
+              "type": "Fastest"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Lap"
+          },
+          "relationship": "IN_SESSION",
+          "target_node": {
+            "label": "Session",
+            "property": {
+              "type": "Qualifying"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Session",
+            "property": {
+              "type": "Qualifying"
+            }
+          },
+          "relationship": "IN_YEAR",
+          "target_node": {
+            "label": "Year",
+            "property": {
+              "value": 2024
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sql": "WITH LatestQualifyingSession AS (\n    SELECT\n        s.session_id,\n        s.session_date\n    FROM\n        f1_data_library_DS.public_sessions AS s\n    JOIN\n        f1_data_library_DS.public_races AS r\n        ON s.race_id = r.race_id\n    JOIN\n        f1_data_library_DS.public_seasons AS sea\n        ON r.season_id = sea.season_id\n    WHERE\n        s.session_type = 'Q'\n        AND sea.year = 2024\n    ORDER BY\n        s.session_date DESC\n    LIMIT 1\n)\nSELECT\n    pd.full_name,\n    FORMAT(\"%02d:%02d.%03d\",\n        CAST(FLOOR(l.lap_time_ms / 60000) AS INT64),\n        CAST(FLOOR(MOD(l.lap_time_ms, 60000) / 1000) AS INT64),\n        CAST(MOD(l.lap_time_ms, 1000) AS INT64)\n    ) AS fastest_lap_time,\n    r.race_name,\n    sea.year\nFROM\n    f1_data_library_DS.public_laps AS l\nJOIN\n    LatestQualifyingSession AS lqs\n    ON l.session_id = lqs.session_id\nJOIN\n    f1_data_library_DS.public_drivers AS pd\n    ON l.driver_id = pd.driver_id\nJOIN\n    f1_data_library_DS.public_sessions AS s\n    ON l.session_id = s.session_id\nJOIN\n    f1_data_library_DS.public_races AS r\n    ON s.race_id = r.race_id\nJOIN\n    f1_data_library_DS.public_seasons AS sea\n    ON r.season_id = sea.season_id\nWHERE\n    l.lap_time_ms = (\n        SELECT MIN(lap_time_ms)\n        FROM f1_data_library_DS.public_laps\n        WHERE session_id = lqs.session_id\n    )\nLIMIT 1;"
+}

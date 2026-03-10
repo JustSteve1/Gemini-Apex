@@ -1,0 +1,1787 @@
+{
+  "last_updated": "2026-03-10",
+  "schema": {
+    "laps_clean": [
+      {
+        "name": "session_id",
+        "type": "INT64"
+      },
+      {
+        "name": "driver_id",
+        "type": "INT64"
+      },
+      {
+        "name": "lap_number",
+        "type": "INT64"
+      },
+      {
+        "name": "lap_time_ms",
+        "type": "INT64"
+      },
+      {
+        "name": "sector1_ms",
+        "type": "INT64"
+      },
+      {
+        "name": "sector2_ms",
+        "type": "INT64"
+      },
+      {
+        "name": "sector3_ms",
+        "type": "INT64"
+      },
+      {
+        "name": "position",
+        "type": "INT64"
+      },
+      {
+        "name": "compound",
+        "type": "STRING"
+      },
+      {
+        "name": "tyre_life",
+        "type": "INT64"
+      },
+      {
+        "name": "stint",
+        "type": "INT64"
+      },
+      {
+        "name": "session_type",
+        "type": "STRING"
+      },
+      {
+        "name": "race_name",
+        "type": "STRING"
+      },
+      {
+        "name": "race_date",
+        "type": "DATE"
+      },
+      {
+        "name": "circuit",
+        "type": "STRING"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      }
+    ],
+    "telemetry": [
+      {
+        "name": "session_key",
+        "type": "INT64"
+      },
+      {
+        "name": "meeting_key",
+        "type": "INT64"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "driver_number",
+        "type": "STRING"
+      },
+      {
+        "name": "lap_number",
+        "type": "INT64"
+      },
+      {
+        "name": "date",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "lap_time_sec",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "interval_sec",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "speed",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "throttle",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "brake",
+        "type": "BOOL"
+      },
+      {
+        "name": "gear",
+        "type": "INT64"
+      },
+      {
+        "name": "rpm",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "drs",
+        "type": "INT64"
+      },
+      {
+        "name": "deceleration",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "distance_m",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "imported_at",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "session_type",
+        "type": "STRING"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING"
+      },
+      {
+        "name": "circuit",
+        "type": "STRING"
+      },
+      {
+        "name": "x",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "y",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "z",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "cumulative_distance",
+        "type": "FLOAT64"
+      }
+    ],
+    "Telemetry Sequences ": [
+      {
+        "name": "sequence_id",
+        "type": "STRING"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING"
+      },
+      {
+        "name": "session_key",
+        "type": "INT64"
+      },
+      {
+        "name": "session_type",
+        "type": "STRING"
+      },
+      {
+        "name": "driver_number",
+        "type": "STRING"
+      },
+      {
+        "name": "lap_number",
+        "type": "INT64"
+      },
+      {
+        "name": "corner_number",
+        "type": "INT64"
+      },
+      {
+        "name": "corner_name",
+        "type": "STRING"
+      },
+      {
+        "name": "corner_type",
+        "type": "STRING"
+      },
+      {
+        "name": "measurement_index",
+        "type": "INT64"
+      },
+      {
+        "name": "measurement_label",
+        "type": "STRING"
+      },
+      {
+        "name": "distance_from_apex",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "lap_time_sec",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "x",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "y",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "z",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "cumulative_distance",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "speed",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "throttle",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "brake",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "gear",
+        "type": "INT64"
+      },
+      {
+        "name": "rpm",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "drs",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "deceleration",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "lap_duration",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "compound",
+        "type": "STRING"
+      },
+      {
+        "name": "tyre_age_laps",
+        "type": "INT64"
+      },
+      {
+        "name": "stint_number",
+        "type": "INT64"
+      },
+      {
+        "name": "extracted_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "public_races": [
+      {
+        "name": "race_id",
+        "type": "INT64"
+      },
+      {
+        "name": "season_id",
+        "type": "INT64"
+      },
+      {
+        "name": "circuit_id",
+        "type": "INT64"
+      },
+      {
+        "name": "race_name",
+        "type": "STRING"
+      },
+      {
+        "name": "race_date",
+        "type": "DATE"
+      },
+      {
+        "name": "datastream_metadata",
+        "type": "STRUCT<uuid STRING, source_timestamp INT64>"
+      }
+    ],
+    "kaggle_2026_tele_data_export": [
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING"
+      },
+      {
+        "name": "circuit",
+        "type": "STRING"
+      },
+      {
+        "name": "session_type",
+        "type": "STRING"
+      },
+      {
+        "name": "driver",
+        "type": "STRING"
+      },
+      {
+        "name": "driver_code",
+        "type": "STRING"
+      },
+      {
+        "name": "lap_number",
+        "type": "INT64"
+      },
+      {
+        "name": "lap_time_sec_total",
+        "type": "NUMERIC"
+      },
+      {
+        "name": "lap_time_formatted",
+        "type": "STRING"
+      },
+      {
+        "name": "interval_data",
+        "type": "JSON"
+      }
+    ],
+    "public_driver_number_mapping": [
+      {
+        "name": "driver_number",
+        "type": "STRING(3)"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "driver_code",
+        "type": "STRING(3)"
+      },
+      {
+        "name": "full_name",
+        "type": "STRING(100)"
+      },
+      {
+        "name": "team_name",
+        "type": "STRING(100)"
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "datastream_metadata",
+        "type": "STRUCT<uuid STRING, source_timestamp INT64>"
+      }
+    ],
+    "import_log": [
+      {
+        "name": "session_key",
+        "type": "INT64"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING"
+      },
+      {
+        "name": "session_type",
+        "type": "STRING"
+      },
+      {
+        "name": "tables_imported",
+        "type": "STRING"
+      },
+      {
+        "name": "laps_imported",
+        "type": "INT64"
+      },
+      {
+        "name": "telemetry_rows",
+        "type": "INT64"
+      },
+      {
+        "name": "status",
+        "type": "STRING"
+      },
+      {
+        "name": "error_message",
+        "type": "STRING"
+      },
+      {
+        "name": "started_at",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "completed_at",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "duration_seconds",
+        "type": "FLOAT64"
+      }
+    ],
+    "driver_mapping_2026": [
+      {
+        "name": "driver_number",
+        "type": "STRING"
+      },
+      {
+        "name": "name_acronym",
+        "type": "STRING"
+      },
+      {
+        "name": "full_name",
+        "type": "STRING"
+      },
+      {
+        "name": "team_name",
+        "type": "STRING"
+      }
+    ],
+    "weather": [
+      {
+        "name": "session_key",
+        "type": "INT64"
+      },
+      {
+        "name": "meeting_key",
+        "type": "INT64"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "date",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "air_temperature",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "track_temperature",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "humidity",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "pressure",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "wind_speed",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "wind_direction",
+        "type": "INT64"
+      },
+      {
+        "name": "rainfall",
+        "type": "BOOL"
+      },
+      {
+        "name": "imported_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "laps": [
+      {
+        "name": "session_key",
+        "type": "INT64"
+      },
+      {
+        "name": "meeting_key",
+        "type": "INT64"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "driver_number",
+        "type": "STRING"
+      },
+      {
+        "name": "lap_number",
+        "type": "INT64"
+      },
+      {
+        "name": "lap_duration",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "lap_time_formatted",
+        "type": "STRING"
+      },
+      {
+        "name": "date_start",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "is_pit_out_lap",
+        "type": "BOOL"
+      },
+      {
+        "name": "duration_sector_1",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "duration_sector_2",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "duration_sector_3",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "i1_speed",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "i2_speed",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "st_speed",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "segments_sector_1",
+        "type": "JSON"
+      },
+      {
+        "name": "segments_sector_2",
+        "type": "JSON"
+      },
+      {
+        "name": "segments_sector_3",
+        "type": "JSON"
+      },
+      {
+        "name": "compound",
+        "type": "STRING"
+      },
+      {
+        "name": "tyre_age_laps",
+        "type": "INT64"
+      },
+      {
+        "name": "stint_number",
+        "type": "INT64"
+      },
+      {
+        "name": "imported_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "public_sessions": [
+      {
+        "name": "session_id",
+        "type": "INT64"
+      },
+      {
+        "name": "race_id",
+        "type": "INT64"
+      },
+      {
+        "name": "session_type",
+        "type": "STRING"
+      },
+      {
+        "name": "session_date",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "datastream_metadata",
+        "type": "STRUCT<uuid STRING, source_timestamp INT64>"
+      }
+    ],
+    "corner_telemetry_sequences_temp_20260305180959": [
+      {
+        "name": "sequence_id",
+        "type": "STRING"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING"
+      },
+      {
+        "name": "session_key",
+        "type": "INT64"
+      },
+      {
+        "name": "session_type",
+        "type": "STRING"
+      },
+      {
+        "name": "driver_number",
+        "type": "STRING"
+      },
+      {
+        "name": "lap_number",
+        "type": "INT64"
+      },
+      {
+        "name": "corner_number",
+        "type": "INT64"
+      },
+      {
+        "name": "corner_name",
+        "type": "STRING"
+      },
+      {
+        "name": "corner_type",
+        "type": "STRING"
+      },
+      {
+        "name": "measurement_index",
+        "type": "INT64"
+      },
+      {
+        "name": "measurement_label",
+        "type": "STRING"
+      },
+      {
+        "name": "distance_from_apex",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "lap_time_sec",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "x",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "y",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "z",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "cumulative_distance",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "speed",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "throttle",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "brake",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "gear",
+        "type": "INT64"
+      },
+      {
+        "name": "rpm",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "drs",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "deceleration",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "lap_duration",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "compound",
+        "type": "STRING"
+      },
+      {
+        "name": "tyre_age_laps",
+        "type": "INT64"
+      },
+      {
+        "name": "stint_number",
+        "type": "INT64"
+      },
+      {
+        "name": "extracted_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "corner_markers": [
+      {
+        "name": "circuit",
+        "type": "STRING"
+      },
+      {
+        "name": "circuit_location",
+        "type": "STRING"
+      },
+      {
+        "name": "layout_version",
+        "type": "STRING"
+      },
+      {
+        "name": "year_valid_from",
+        "type": "INT64"
+      },
+      {
+        "name": "year_valid_to",
+        "type": "INT64"
+      },
+      {
+        "name": "corner_number",
+        "type": "INT64"
+      },
+      {
+        "name": "corner_name",
+        "type": "STRING"
+      },
+      {
+        "name": "corner_type",
+        "type": "STRING"
+      },
+      {
+        "name": "apex_x",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "apex_y",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "apex_z",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "curvature",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "detected_from_year",
+        "type": "INT64"
+      },
+      {
+        "name": "detected_from_session",
+        "type": "STRING"
+      },
+      {
+        "name": "detection_confidence",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "manually_validated",
+        "type": "BOOL"
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "public_telemetry_intervals": [
+      {
+        "name": "id",
+        "type": "INT64"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING(100)"
+      },
+      {
+        "name": "circuit",
+        "type": "STRING(100)"
+      },
+      {
+        "name": "session_type",
+        "type": "STRING(10)"
+      },
+      {
+        "name": "driver",
+        "type": "STRING(3)"
+      },
+      {
+        "name": "lap_number",
+        "type": "INT64"
+      },
+      {
+        "name": "lap_time_sec_total",
+        "type": "NUMERIC(6, 3)"
+      },
+      {
+        "name": "interval_sec",
+        "type": "NUMERIC(4, 2)"
+      },
+      {
+        "name": "generated_at_utc",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "interval_data",
+        "type": "JSON"
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "datastream_metadata",
+        "type": "STRUCT<uuid STRING, source_timestamp INT64>"
+      }
+    ],
+    "positions": [
+      {
+        "name": "session_key",
+        "type": "INT64"
+      },
+      {
+        "name": "meeting_key",
+        "type": "INT64"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "driver_number",
+        "type": "STRING"
+      },
+      {
+        "name": "date",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "x",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "y",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "z",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "imported_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "pit_stops": [
+      {
+        "name": "session_key",
+        "type": "INT64"
+      },
+      {
+        "name": "meeting_key",
+        "type": "INT64"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "driver_number",
+        "type": "STRING"
+      },
+      {
+        "name": "lap_number",
+        "type": "INT64"
+      },
+      {
+        "name": "date",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "pit_duration",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "lane_duration",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "stop_duration",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "imported_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "corner_telemetry_sequences": [
+      {
+        "name": "sequence_id",
+        "type": "STRING"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING"
+      },
+      {
+        "name": "session_key",
+        "type": "INT64"
+      },
+      {
+        "name": "session_type",
+        "type": "STRING"
+      },
+      {
+        "name": "driver_number",
+        "type": "STRING"
+      },
+      {
+        "name": "lap_number",
+        "type": "INT64"
+      },
+      {
+        "name": "corner_number",
+        "type": "INT64"
+      },
+      {
+        "name": "corner_name",
+        "type": "STRING"
+      },
+      {
+        "name": "corner_type",
+        "type": "STRING"
+      },
+      {
+        "name": "measurement_index",
+        "type": "INT64"
+      },
+      {
+        "name": "measurement_label",
+        "type": "STRING"
+      },
+      {
+        "name": "distance_from_apex",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "lap_time_sec",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "x",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "y",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "z",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "cumulative_distance",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "speed",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "throttle",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "brake",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "gear",
+        "type": "INT64"
+      },
+      {
+        "name": "rpm",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "drs",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "deceleration",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "lap_duration",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "compound",
+        "type": "STRING"
+      },
+      {
+        "name": "tyre_age_laps",
+        "type": "INT64"
+      },
+      {
+        "name": "stint_number",
+        "type": "INT64"
+      },
+      {
+        "name": "extracted_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "sessions": [
+      {
+        "name": "session_key",
+        "type": "INT64"
+      },
+      {
+        "name": "meeting_key",
+        "type": "INT64"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING"
+      },
+      {
+        "name": "circuit",
+        "type": "STRING"
+      },
+      {
+        "name": "circuit_short_name",
+        "type": "STRING"
+      },
+      {
+        "name": "location",
+        "type": "STRING"
+      },
+      {
+        "name": "country_name",
+        "type": "STRING"
+      },
+      {
+        "name": "session_name",
+        "type": "STRING"
+      },
+      {
+        "name": "session_type",
+        "type": "STRING"
+      },
+      {
+        "name": "date_start",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "date_end",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "imported_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "intervals": [
+      {
+        "name": "session_key",
+        "type": "INT64"
+      },
+      {
+        "name": "meeting_key",
+        "type": "INT64"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "driver_number",
+        "type": "STRING"
+      },
+      {
+        "name": "date",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "gap_to_leader",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "interval",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "imported_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "public_circuits": [
+      {
+        "name": "circuit_id",
+        "type": "INT64"
+      },
+      {
+        "name": "name",
+        "type": "STRING"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "datastream_metadata",
+        "type": "STRUCT<uuid STRING, source_timestamp INT64>"
+      }
+    ],
+    "driver_number_mapping": [
+      {
+        "name": "driver_number",
+        "type": "STRING"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "driver_code",
+        "type": "STRING"
+      },
+      {
+        "name": "full_name",
+        "type": "STRING"
+      },
+      {
+        "name": "team_name",
+        "type": "STRING"
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "public_drivers": [
+      {
+        "name": "driver_id",
+        "type": "INT64"
+      },
+      {
+        "name": "driver_code",
+        "type": "STRING"
+      },
+      {
+        "name": "first_name",
+        "type": "STRING"
+      },
+      {
+        "name": "last_name",
+        "type": "STRING"
+      },
+      {
+        "name": "full_name",
+        "type": "STRING"
+      },
+      {
+        "name": "nationality",
+        "type": "STRING"
+      },
+      {
+        "name": "datastream_metadata",
+        "type": "STRUCT<uuid STRING, source_timestamp INT64>"
+      }
+    ],
+    "race_control": [
+      {
+        "name": "session_key",
+        "type": "INT64"
+      },
+      {
+        "name": "meeting_key",
+        "type": "INT64"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "date",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "lap_number",
+        "type": "INT64"
+      },
+      {
+        "name": "driver_number",
+        "type": "STRING"
+      },
+      {
+        "name": "category",
+        "type": "STRING"
+      },
+      {
+        "name": "flag",
+        "type": "STRING"
+      },
+      {
+        "name": "scope",
+        "type": "STRING"
+      },
+      {
+        "name": "sector",
+        "type": "INT64"
+      },
+      {
+        "name": "message",
+        "type": "STRING"
+      },
+      {
+        "name": "imported_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "Telemetry Sequences": [
+      {
+        "name": "sequence_id",
+        "type": "STRING"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING"
+      },
+      {
+        "name": "session_key",
+        "type": "INT64"
+      },
+      {
+        "name": "session_type",
+        "type": "STRING"
+      },
+      {
+        "name": "driver_number",
+        "type": "STRING"
+      },
+      {
+        "name": "lap_number",
+        "type": "INT64"
+      },
+      {
+        "name": "corner_number",
+        "type": "INT64"
+      },
+      {
+        "name": "corner_name",
+        "type": "STRING"
+      },
+      {
+        "name": "corner_type",
+        "type": "STRING"
+      },
+      {
+        "name": "measurement_index",
+        "type": "INT64"
+      },
+      {
+        "name": "measurement_label",
+        "type": "STRING"
+      },
+      {
+        "name": "distance_from_apex",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "lap_time_sec",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "x",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "y",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "z",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "cumulative_distance",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "speed",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "throttle",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "brake",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "gear",
+        "type": "INT64"
+      },
+      {
+        "name": "rpm",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "drs",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "deceleration",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "lap_duration",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "compound",
+        "type": "STRING"
+      },
+      {
+        "name": "tyre_age_laps",
+        "type": "INT64"
+      },
+      {
+        "name": "stint_number",
+        "type": "INT64"
+      },
+      {
+        "name": "extracted_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "telemetry_intervals": [
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING"
+      },
+      {
+        "name": "circuit",
+        "type": "STRING"
+      },
+      {
+        "name": "session_type",
+        "type": "STRING"
+      },
+      {
+        "name": "driver",
+        "type": "STRING"
+      },
+      {
+        "name": "lap_number",
+        "type": "INT64"
+      },
+      {
+        "name": "lap_time_sec_total",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "interval_sec",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "generated_at_utc",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "interval_data",
+        "type": "STRING"
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "public_session_data_audit": [
+      {
+        "name": "audit_id",
+        "type": "INT64"
+      },
+      {
+        "name": "session_id",
+        "type": "INT64"
+      },
+      {
+        "name": "season_year",
+        "type": "INT64"
+      },
+      {
+        "name": "race_name",
+        "type": "STRING"
+      },
+      {
+        "name": "session_type",
+        "type": "STRING"
+      },
+      {
+        "name": "data_status",
+        "type": "STRING"
+      },
+      {
+        "name": "missing_fields",
+        "type": "JSON"
+      },
+      {
+        "name": "notes",
+        "type": "STRING"
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "datastream_metadata",
+        "type": "STRUCT<uuid STRING, source_timestamp INT64>"
+      }
+    ],
+    "stints": [
+      {
+        "name": "session_key",
+        "type": "INT64"
+      },
+      {
+        "name": "meeting_key",
+        "type": "INT64"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "driver_number",
+        "type": "STRING"
+      },
+      {
+        "name": "stint_number",
+        "type": "INT64"
+      },
+      {
+        "name": "lap_start",
+        "type": "INT64"
+      },
+      {
+        "name": "lap_end",
+        "type": "INT64"
+      },
+      {
+        "name": "compound",
+        "type": "STRING"
+      },
+      {
+        "name": "tyre_age_at_start",
+        "type": "INT64"
+      },
+      {
+        "name": "imported_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "corner_features": [
+      {
+        "name": "session_key",
+        "type": "INT64"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "driver_number",
+        "type": "STRING"
+      },
+      {
+        "name": "lap_number",
+        "type": "INT64"
+      },
+      {
+        "name": "corner_id",
+        "type": "INT64"
+      },
+      {
+        "name": "corner_name",
+        "type": "STRING"
+      },
+      {
+        "name": "entry_speed",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "entry_time_sec",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "entry_gear",
+        "type": "INT64"
+      },
+      {
+        "name": "brake_point_sec",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "throttle_lift_sec",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "apex_speed",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "apex_time_sec",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "apex_gear",
+        "type": "INT64"
+      },
+      {
+        "name": "apex_distance_m",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "exit_speed",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "exit_time_sec",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "exit_gear",
+        "type": "INT64"
+      },
+      {
+        "name": "throttle_app_sec",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "corner_duration_sec",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "speed_loss",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "exit_acceleration",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "compound",
+        "type": "STRING"
+      },
+      {
+        "name": "tyre_age_laps",
+        "type": "INT64"
+      },
+      {
+        "name": "track_temp",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "lap_time_sec",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "imported_at",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "public_laps": [
+      {
+        "name": "lap_id",
+        "type": "INT64"
+      },
+      {
+        "name": "session_id",
+        "type": "INT64"
+      },
+      {
+        "name": "driver_id",
+        "type": "INT64"
+      },
+      {
+        "name": "lap_number",
+        "type": "INT64"
+      },
+      {
+        "name": "lap_time_ms",
+        "type": "INT64"
+      },
+      {
+        "name": "sector1_ms",
+        "type": "INT64"
+      },
+      {
+        "name": "sector2_ms",
+        "type": "INT64"
+      },
+      {
+        "name": "sector3_ms",
+        "type": "INT64"
+      },
+      {
+        "name": "position",
+        "type": "INT64"
+      },
+      {
+        "name": "compound",
+        "type": "STRING"
+      },
+      {
+        "name": "tyre_life",
+        "type": "INT64"
+      },
+      {
+        "name": "stint",
+        "type": "INT64"
+      },
+      {
+        "name": "is_deleted",
+        "type": "BOOL"
+      },
+      {
+        "name": "team_id",
+        "type": "INT64"
+      },
+      {
+        "name": "datastream_metadata",
+        "type": "STRUCT<uuid STRING, source_timestamp INT64>"
+      }
+    ],
+    "public_seasons": [
+      {
+        "name": "season_id",
+        "type": "INT64"
+      },
+      {
+        "name": "year",
+        "type": "INT64"
+      },
+      {
+        "name": "datastream_metadata",
+        "type": "STRUCT<uuid STRING, source_timestamp INT64>"
+      }
+    ],
+    "public_telemetry_intervals_enriched": [
+      {
+        "name": "id",
+        "type": "INT64"
+      },
+      {
+        "name": "season",
+        "type": "INT64"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING"
+      },
+      {
+        "name": "circuit",
+        "type": "STRING"
+      },
+      {
+        "name": "session_type",
+        "type": "STRING"
+      },
+      {
+        "name": "driver",
+        "type": "STRING"
+      },
+      {
+        "name": "lap_number",
+        "type": "INT64"
+      },
+      {
+        "name": "lap_time_sec_total",
+        "type": "NUMERIC"
+      },
+      {
+        "name": "interval_sec",
+        "type": "NUMERIC"
+      },
+      {
+        "name": "generated_at_utc",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "interval_data",
+        "type": "JSON"
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "datastream_metadata",
+        "type": "STRUCT<uuid STRING, source_timestamp INT64>"
+      },
+      {
+        "name": "driver_code",
+        "type": "STRING"
+      },
+      {
+        "name": "lap_time_mmss_mmm",
+        "type": "STRING"
+      }
+    ]
+  }
+}

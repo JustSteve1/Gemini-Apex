@@ -1,0 +1,102 @@
+{
+  "skill_execution": {
+    "question": "Compare HAM vs LEC through Turn 3",
+    "metadata": {
+      "timestamp": "2024-07-30T12:00:00Z",
+      "entities_extracted": [
+        "Lewis Hamilton",
+        "Charles Leclerc",
+        "Turn 3",
+        "Australian Grand Prix",
+        "2026",
+        "Qualifying"
+      ],
+      "conceptual_graph": [
+        {
+          "source_node": {
+            "label": "Driver",
+            "property": {
+              "name": "Lewis Hamilton",
+              "code": "HAM"
+            }
+          },
+          "relationship": "COMPARED_TO",
+          "target_node": {
+            "label": "Driver",
+            "property": {
+              "name": "Charles Leclerc",
+              "code": "LEC"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Driver"
+          },
+          "relationship": "DRIVES_THROUGH",
+          "target_node": {
+            "label": "Corner",
+            "property": {
+              "number": 3
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Corner"
+          },
+          "relationship": "HAS_TELEMETRY",
+          "target_node": {
+            "label": "Telemetry",
+            "property": {
+              "metrics": [
+                "speed",
+                "throttle",
+                "brake",
+                "gear",
+                "rpm"
+              ]
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Telemetry"
+          },
+          "relationship": "RECORDED_IN",
+          "target_node": {
+            "label": "Session",
+            "property": {
+              "type": "Qualifying"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Session"
+          },
+          "relationship": "PART_OF",
+          "target_node": {
+            "label": "Event",
+            "property": {
+              "name": "Australian Grand Prix"
+            }
+          }
+        },
+        {
+          "source_node": {
+            "label": "Event"
+          },
+          "relationship": "IN_SEASON",
+          "target_node": {
+            "label": "Season",
+            "property": {
+              "year": 2026
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sql": "WITH DriverNumbers AS (\n    SELECT\n        driver_number,\n        name_acronym\n    FROM\n        f1_data_library_DS.driver_mapping_2026\n    WHERE\n        name_acronym IN ('HAM', 'LEC')\n),\nFastestLapsPerDriver AS (\n    SELECT\n        cts.driver_number,\n        cts.lap_number,\n        cts.lap_duration,\n        ROW_NUMBER() OVER (PARTITION BY cts.driver_number ORDER BY cts.lap_duration ASC) as rn\n    FROM\n        f1_data_library_DS.corner_telemetry_sequences AS cts\n    WHERE\n        cts.season = 2026\n        AND cts.event_name = 'Australian Grand Prix'\n        AND cts.session_type = 'Q'\n        AND cts.driver_number IN (SELECT driver_number FROM DriverNumbers)\n        AND cts.corner_number = 3\n    GROUP BY\n        cts.driver_number,\n        cts.lap_number,\n        cts.lap_duration\n)\nSELECT\n    dn.name_acronym AS driver_code,\n    cts.lap_number,\n    ROUND(cts.distance_from_apex, 2) AS distance_from_apex_m,\n    ROUND(cts.speed, 1) AS speed_kmh,\n    ROUND(cts.throttle, 2) AS throttle_percent,\n    CAST(cts.brake AS INT64) AS brake_applied,\n    cts.gear,\n    ROUND(cts.rpm, 0) AS rpm\nFROM\n    f1_data_library_DS.corner_telemetry_sequences AS cts\nJOIN\n    FastestLapsPerDriver AS flpd\n    ON cts.driver_number = flpd.driver_number\n    AND cts.lap_number = flpd.lap_number\nJOIN\n    DriverNumbers AS dn\n    ON cts.driver_number = dn.driver_number\nWHERE\n    flpd.rn = 1\n    AND cts.season = 2026\n    AND cts.event_name = 'Australian Grand Prix'\n    AND cts.session_type = 'Q'\n    AND cts.corner_number = 3\nORDER BY\n    dn.name_acronym,\n    cts.distance_from_apex\nLIMIT 50;"
+}
