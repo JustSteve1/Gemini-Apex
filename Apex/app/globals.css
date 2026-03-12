@@ -4,40 +4,296 @@
 
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
 
+/* ══════════════════════════════════════════════════════
+   APEX DESIGN TOKENS
+   :root = light mode defaults
+   .dark = dark mode overrides
+   ══════════════════════════════════════════════════════ */
+
 :root {
   --apex-red: #E10600;
-  --apex-dark: #08080D;
+
+  /* Canvas */
+  --apex-bg: #F3F3F7;
+  --apex-canvas-base: #EAEAF0;
+  --canvas-glow-1: rgba(180, 20, 20, 0.07);
+  --canvas-glow-2: rgba(60, 30, 100, 0.04);
+
+  /* Glass surfaces */
+  --glass-bg: rgba(255, 255, 255, 0.62);
+  --glass-bg-hover: rgba(255, 255, 255, 0.82);
+  --glass-bg-editing: rgba(255, 255, 255, 0.80);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-border-strong: rgba(0, 0, 0, 0.18);
+  --glass-border-editing: rgba(0, 0, 0, 0.20);
+  --glass-specular: rgba(255, 255, 255, 0.95);
+  --glass-shadow: rgba(0, 0, 0, 0.06);
+  --glass-shadow-strong: rgba(0, 0, 0, 0.12);
+
+  /* Component backgrounds */
+  --glass-header-bg: rgba(243, 243, 247, 0.80);
+  --glass-drawer-bg: rgba(238, 238, 246, 0.94);
+  --glass-pill-bg: rgba(255, 255, 255, 0.65);
+
+  /* Typography */
+  --text-primary: #0A0A14;
+  --text-muted: rgba(10, 10, 20, 0.50);
+  --text-subtle: rgba(10, 10, 20, 0.30);
+  --text-faint: rgba(10, 10, 20, 0.15);
 }
+
+.dark {
+  --apex-bg: #060608;
+  --apex-canvas-base: #060608;
+  --canvas-glow-1: rgba(180, 20, 20, 0.13);
+  --canvas-glow-2: rgba(60, 30, 100, 0.09);
+
+  --glass-bg: rgba(255, 255, 255, 0.028);
+  --glass-bg-hover: rgba(255, 255, 255, 0.055);
+  --glass-bg-editing: rgba(255, 255, 255, 0.048);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-border-strong: rgba(255, 255, 255, 0.20);
+  --glass-border-editing: rgba(255, 255, 255, 0.18);
+  --glass-specular: rgba(255, 255, 255, 0.08);
+  --glass-shadow: rgba(0, 0, 0, 0.35);
+  --glass-shadow-strong: rgba(0, 0, 0, 0.55);
+
+  --glass-header-bg: rgba(6, 6, 8, 0.65);
+  --glass-drawer-bg: rgba(8, 8, 14, 0.82);
+  --glass-pill-bg: rgba(255, 255, 255, 0.04);
+
+  --text-primary: #FFFFFF;
+  --text-muted: rgba(255, 255, 255, 0.40);
+  --text-subtle: rgba(255, 255, 255, 0.22);
+  --text-faint: rgba(255, 255, 255, 0.10);
+}
+
+/* ══════════════════════════════════════════════════════
+   BASE
+   ══════════════════════════════════════════════════════ */
 
 body {
-  background-color: var(--apex-dark);
-  color: #ffffff;
+  background-color: var(--apex-bg);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
+/* ══════════════════════════════════════════════════════
+   GLASS COMPONENTS
+   ══════════════════════════════════════════════════════ */
+
+.dashboard-canvas {
+  background:
+    radial-gradient(ellipse at 72% 12%, var(--canvas-glow-1) 0%, transparent 52%),
+    radial-gradient(ellipse at 18% 88%, var(--canvas-glow-2) 0%, transparent 45%),
+    var(--apex-canvas-base);
+  min-height: 100vh;
 }
 
-::-webkit-scrollbar-track {
-  background: #141420;
+.glass-tile {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 0 var(--glass-specular),
+    0 4px 24px var(--glass-shadow),
+    0 1px 4px var(--glass-shadow);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #2A2A3D;
-  border-radius: 3px;
+.glass-tile-editing {
+  background: var(--glass-bg-editing);
+  border-color: var(--glass-border-editing);
+  box-shadow:
+    inset 0 1px 0 var(--glass-specular),
+    0 0 0 1px var(--glass-border),
+    0 12px 40px var(--glass-shadow-strong),
+    0 2px 8px var(--glass-shadow);
+  transform: translateY(-1px);
+  animation: widget-settle 0.2s ease forwards;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #3A3A5D;
+.glass-header {
+  background: var(--glass-header-bg);
+  backdrop-filter: blur(24px) saturate(1.5);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 1px 0 var(--glass-specular);
 }
 
-/* Typing animation */
+.glass-drawer {
+  background: var(--glass-drawer-bg);
+  backdrop-filter: blur(40px) saturate(1.6);
+  -webkit-backdrop-filter: blur(40px) saturate(1.6);
+  border-top: 1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 0 var(--glass-specular),
+    0 -24px 80px var(--glass-shadow-strong);
+}
+
+.glass-pill {
+  background: var(--glass-pill-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 0 var(--glass-specular),
+    0 4px 16px var(--glass-shadow);
+}
+
+/* ══════════════════════════════════════════════════════
+   WIDGET TEXT — LIGHT MODE OVERRIDES
+   Remaps text-white/XX opacity variants inside .glass-tile
+   so widget components need zero individual changes.
+   ══════════════════════════════════════════════════════ */
+
+:root .glass-tile .text-white            { color: var(--text-primary); }
+:root .glass-tile .text-white\/80        { color: rgba(10,10,20,0.82); }
+:root .glass-tile .text-white\/60        { color: rgba(10,10,20,0.62); }
+:root .glass-tile .text-white\/50        { color: rgba(10,10,20,0.52); }
+:root .glass-tile .text-white\/40        { color: rgba(10,10,20,0.42); }
+:root .glass-tile .text-white\/35        { color: rgba(10,10,20,0.35); }
+:root .glass-tile .text-white\/30        { color: rgba(10,10,20,0.32); }
+:root .glass-tile .text-white\/25        { color: rgba(10,10,20,0.25); }
+:root .glass-tile .text-white\/20        { color: rgba(10,10,20,0.22); }
+:root .glass-tile .text-white\/15        { color: rgba(10,10,20,0.18); }
+:root .glass-tile .text-white\/10        { color: rgba(10,10,20,0.12); }
+
+/* Tooltip/card backgrounds inside widgets */
+:root .glass-tile .bg-black             { background-color: rgba(240,240,250,0.97) !important; }
+:root .glass-tile .border-white\/10     { border-color: rgba(10,10,20,0.10); }
+:root .glass-tile .border-white\/\[0\.06\] { border-color: rgba(10,10,20,0.08); }
+:root .glass-tile .border-white\/\[0\.04\] { border-color: rgba(10,10,20,0.06); }
+
+/* bg-white opacity variants used in AgentWidget messages */
+:root .glass-tile .bg-white\/\[0\.08\]  { background-color: rgba(10,10,20,0.06) !important; }
+
+/* Recharts axis lines */
+:root .glass-tile .stroke-\[rgba\(255\,255\,255\,0\.06\)\] { stroke: rgba(10,10,20,0.06); }
+
+/* Recharts SVG axis ticks and lines (inline SVG attrs — must use !important) */
+:root .glass-tile .recharts-cartesian-axis-tick text { fill: rgba(10,10,20,0.15) !important; }
+:root .glass-tile .recharts-cartesian-axis-line      { stroke: rgba(10,10,20,0.06) !important; }
+
+/* Battery widget & other bg-white variants */
+:root .glass-tile .bg-white                  { background-color: var(--text-primary) !important; }
+:root .glass-tile .bg-white\/10              { background-color: rgba(10,10,20,0.10) !important; }
+:root .glass-tile .bg-white\/30              { background-color: rgba(10,10,20,0.30) !important; }
+:root .glass-tile .bg-white\/\[0\.04\]      { background-color: rgba(10,10,20,0.04) !important; }
+
+/* ══════════════════════════════════════════════════════
+   ADAPTIVE UTILITY CLASSES
+   (use these instead of hardcoded rgba() values)
+   ══════════════════════════════════════════════════════ */
+
+/* Ghost button — adapts border + bg to theme */
+.apex-ghost-btn {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+.apex-ghost-btn:hover {
+  color: var(--text-primary);
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-strong);
+}
+
+/* Active/filled button — inverted text on primary bg */
+.apex-active-btn {
+  background: var(--text-primary);
+  color: var(--apex-bg);
+  box-shadow: 0 0 0 1px var(--glass-border-strong), 0 2px 8px var(--glass-shadow);
+}
+
+/* Edit mode hint strip */
+.apex-edit-banner {
+  background: linear-gradient(to bottom, var(--glass-bg-hover), transparent);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* Dashed add-widget slot */
+.apex-dashed-slot {
+  border: 1.5px dashed var(--glass-border);
+  background: transparent;
+  border-radius: 16px;
+  transition: background 0.25s, border-color 0.25s;
+}
+.apex-dashed-slot:hover {
+  background: var(--glass-bg);
+  border-color: var(--glass-border-strong);
+}
+
+/* Drawer widget card */
+.apex-drawer-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  transition: background 0.2s, border-color 0.2s;
+}
+.apex-drawer-card:hover:not(:disabled) {
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-strong);
+}
+.apex-drawer-card:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+/* Text utilities */
+.apex-text-primary { color: var(--text-primary); }
+.apex-text-muted   { color: var(--text-muted); }
+.apex-text-subtle  { color: var(--text-subtle); }
+.apex-text-faint   { color: var(--text-faint); }
+
+/* ══════════════════════════════════════════════════════
+   ANIMATIONS
+   ══════════════════════════════════════════════════════ */
+
+@keyframes widget-settle {
+  from { transform: translateY(-2px); opacity: 0.8; }
+  to   { transform: translateY(-1px); opacity: 1; }
+}
+
+@keyframes specular-sweep {
+  0%   { transform: translateX(-100%) skewX(-20deg); }
+  100% { transform: translateX(300%) skewX(-20deg); }
+}
+.glass-tile-editing:hover .specular-sweep {
+  animation: specular-sweep 0.6s ease forwards;
+}
+
+@keyframes float-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0px); }
+  50%       { transform: translateX(-50%) translateY(-7px); }
+}
+.builder-btn {
+  animation: float-bounce 2.4s ease-in-out infinite;
+}
+.builder-btn:hover {
+  animation-play-state: paused;
+}
+
 @keyframes blink {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  50%       { opacity: 0; }
 }
-
 .cursor-blink {
   animation: blink 1s step-end infinite;
+}
+
+/* ══════════════════════════════════════════════════════
+   SCROLLBAR
+   ══════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--glass-border-strong);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--glass-border-editing);
 }
