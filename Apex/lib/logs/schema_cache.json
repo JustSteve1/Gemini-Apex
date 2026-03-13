@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-10",
+  "last_updated": "2026-03-13",
   "schema": {
     "laps_clean": [
       {
@@ -594,6 +594,82 @@
       },
       {
         "name": "imported_at",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "driver_code",
+        "type": "STRING"
+      },
+      {
+        "name": "team",
+        "type": "STRING"
+      },
+      {
+        "name": "position",
+        "type": "INT64"
+      },
+      {
+        "name": "lap_start_time",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "pit_out_time",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "pit_in_time",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "sector_1_session_time",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "sector_2_session_time",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "sector_3_session_time",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "speed_i1",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "speed_i2",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "speed_st",
+        "type": "FLOAT64"
+      },
+      {
+        "name": "is_personal_best",
+        "type": "BOOL"
+      },
+      {
+        "name": "fresh_tyre",
+        "type": "BOOL"
+      },
+      {
+        "name": "track_status",
+        "type": "STRING"
+      },
+      {
+        "name": "deleted",
+        "type": "BOOL"
+      },
+      {
+        "name": "deleted_reason",
+        "type": "STRING"
+      },
+      {
+        "name": "fastf1_generated",
+        "type": "BOOL"
+      },
+      {
+        "name": "lap_start_date",
         "type": "TIMESTAMP"
       }
     ],
